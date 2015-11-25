@@ -1,13 +1,30 @@
-class Character(object):
-    def __init__(self,name,hp,weapon = 1, armour = 0):
+import pygame
+blue = (0,0,255)
+class Character(pygame.sprite.Sprite):
+    def __init__(self,name,hp,weapon = 1, armour = 0,color=blue,width = 10,height = 10):
+        pygame.sprite.Sprite.__init__(self)
+        self.image=pygame.Surface([width,height])
+        self.image.fill(color)
+        self.rect=self.image.get_rect()
         self.name = name
         self.hp = hp
         self.weapon = weapon
         self.armour = armour
-
+     
     def attack(self,other):
         pass
+    def set_positon(self,x,y):
+        self.rect.x=x
+        self.rect.y=y
+        
 
-    
+    def UpdateHP(self,value):
+        self.hp = self.hp+value
+        if self.hp < 0:
+            self.hp = 0
 
-    
+    def isDead(self):
+        if self.hp <= 0:
+            return True
+        else:
+            return False
