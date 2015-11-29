@@ -1,7 +1,7 @@
 import pygame
 blue = (0,0,255)
 class Character(pygame.sprite.Sprite):
-    def __init__(self,name,hp,weapon = 1, armour = 0,color=blue,width = 10,height = 10):
+    def __init__(self,name,hp,weapon = 1, armour = 0,color=blue,width = 32,height = 32):
         pygame.sprite.Sprite.__init__(self)
         self.image=pygame.Surface([width,height])
         self.image.fill(color)
@@ -10,6 +10,7 @@ class Character(pygame.sprite.Sprite):
         self.hp = hp
         self.weapon = weapon
         self.armour = armour
+        self.location = [100,100]
      
     def attack(self,other):
         pass

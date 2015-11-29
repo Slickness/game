@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="22" height="22" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="PathAndObjects" tilewidth="32" tileheight="32">
+  <image source="PathAndObjects.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="22" height="22">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA9vEwMCwaRSP4lE8ikfxKB7FA4oBwGbwYJAHAAA=
+  </data>
+ </layer>
+ <layer name="objects" width="22" height="22">
+  <properties>
+   <property name="col" value="1"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgIB6kkqCWHYg5gJiTyuaKA7EEEEsSYS8p5qoDsQYQaxJhLynmkmIvNc1lgJoHw9Q2l5T4JcVcQvFLrrmE4pdcc2kBkM1dSmVzqZ0eyM1v+ADIz+j5DRcmFRCTDqgdr7A4pEd6GQVDGwAAnPAQq5AHAAA=
+  </data>
+ </layer>
+ <objectgroup name="objects" width="22" height="22">
+  <properties>
+   <property name="col" value="1"/>
+  </properties>
+  <object name="col" x="480" y="478" width="33" height="33"/>
+  <object name="col" x="384" y="321" width="34" height="32"/>
+  <object name="col" x="226" y="419" width="28" height="30"/>
+ </objectgroup>
+</map>
