@@ -12,14 +12,11 @@ rect_color = (255,0,0)
 poly_color = (0,255,0)
 
 def displayMap(level):
+    #show the map using tmx tiles
     global screenWidth
     global screenHeight
     global screen 
-    #tileWidth = int(screenWidth/32)
-    #tileHeight = int(screenHeight/32)
-    #screenSize = (screenWidth,screenHeight)
     gameMap = load_pygame(level)
-    #blockers = []
     for layer in gameMap.visible_layers:
         if isinstance(layer,pytmx.TiledTileLayer):
             for x,y,image in layer.tiles():
@@ -28,27 +25,20 @@ def displayMap(level):
             for obj in layer:
                 if hasattr(obj,'col'):
                     pygame.draw.lines(screen,poly_color,obj.closed,obj.points,3)
-                     
                 elif obj.image:
                     screen.blit(obj.image,(obj.x,obj.y))
         elif isinstance(layer,pytmx.TiledImageLayer):
-        
             screen.blit(layer.image,(0,0))
     for obj in gameMap.objects:
-        #print (obj.x,obj.y,obj.width,obj.height)
         blocker_group.add(Blocks(obj.x,obj.y,obj.width,obj.height))
          
-    #print (blockers)
     
-    #blocker_group.add(Blocks(blockers))
             
 
 def movePlayer(direction):
     #adding movement to player, add in no areas later
     # add variable for distance moved instead of number
-    moveSize = 10
-    
-    #updateHP()
+    moveSize = 8
     global screenWidth
     global screenHeight
     if direction == "north":
@@ -71,7 +61,7 @@ def movePlayer(direction):
     if direction == "east":
         player.location[0] = player.location[0]+moveSize
         if player.location[0] > screenWidth-32:
-            player.location[0] = screenWidth-move_size
+            player.location[0] = screenWidth-32
         player.set_positon(player.location[0],player.location[1])
 
         if len(pygame.sprite.spritecollide(player,blocker_group,False)) > 0:
@@ -86,10 +76,8 @@ def movePlayer(direction):
             player.location[0] = player.location[0]+moveSize
         player.set_positon(player.location[0],player.location[1])
     displayMap("images/level1.tmx") 
-    #block_group.draw(screen)
-    #pygame.display.update()
 def updateHP(x):
-    #player.UpdateHP(-10)
+    #x is how much to lower the xp
     player.UpdateHP(x)
     screen.blit(healthbar,(5,5))
     for health1 in range(int(player.hp)):
@@ -99,7 +87,6 @@ def updateHP(x):
         fonts = pygame.font.SysFont("monospace",40)
         label = fonts.render("you are dead",1,(0,0,0))
         screen.blit(label,(100,240))
-    #screen.blit(playerImage,(200,200))
     pygame.display.update()
 
 
@@ -125,15 +112,28 @@ block_group=pygame.sprite.Group()
 blocker_group=pygame.sprite.Group()
 
 block_group.add(player)
-
+pygame.mouse.set_visible(0)
+pygame.display.set_caption("RPG Game")
+clock = pygame.time.Clock()
 displayMap("images/level1.tmx")
 block_group.draw(screen)
+#variables to hold for keep moving
+moveNorth = False
+moveSouth = False
+moveEast = False
+moveWest = False
 
 while True:
+    clock.tick(30)
     updateHP(0)
-    #blocker_group.draw(screen)
-    block_hit_list = pygame.sprite.spritecollide(player,blocker_group,False)
-    #print (block_hit_list)
+    if moveNorth == True:
+        movePlayer("north")
+    if moveSouth == True:
+        movePlayer("south")
+    if moveEast == True:
+        movePlayer("east")
+    if moveWest == True:
+        movePlayer("west")
     block_group.draw(screen)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -142,10 +142,21 @@ while True:
             if event.key == pygame.K_u:
                 updateHP(-5)
             if event.key == pygame.K_UP:
-                movePlayer("north")
+                moveNorth = True
             if event.key == pygame.K_DOWN:
-                movePlayer("south")
+                moveSouth = True
             if event.key == pygame.K_RIGHT:
-                movePlayer("east")
+                moveEast = True
             if event.key == pygame.K_LEFT:
-                movePlayer("west")
+                moveWest = True
+
+        if event.type == pygame.KEYUP:
+            
+            if event.key == pygame.K_UP:
+                moveNorth = False
+            if event.key == pygame.K_DOWN:
+                moveSouth = False
+            if event.key == pygame.K_RIGHT:
+                moveEast = False
+            if event.key == pygame.K_LEFT:
+                moveWest = False
