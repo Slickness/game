@@ -3,6 +3,7 @@ blue = (0,0,255)
 class Character(pygame.sprite.Sprite):
     def __init__(self,name,hp,weapon = 1, armour = 0,color=blue,width = 32,height = 32):
         pygame.sprite.Sprite.__init__(self)
+        self.color = color
         self.image=pygame.Surface([width,height])
         self.image.fill(color)
         self.rect=self.image.get_rect()
@@ -29,3 +30,10 @@ class Character(pygame.sprite.Sprite):
             return True
         else:
             return False
+    def addImage(self,picture):
+        
+        self.image = pygame.image.load(picture)
+        self.image = pygame.transform.scale(self.image,(32,32))
+
+        self.rect = self.image.get_rect()
+        
