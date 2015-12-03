@@ -15,7 +15,7 @@ class Character(pygame.sprite.Sprite):
      
     def attack(self,other):
         pass
-    def set_positon(self,x,y):
+    def set_position(self,x,y):
         self.rect.x=x
         self.rect.y=y
         
